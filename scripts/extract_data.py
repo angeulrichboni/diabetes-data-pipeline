@@ -16,5 +16,5 @@ data = X.copy()
 data["readmitted"] = y["readmitted"]
 
 # upload to minio
-data.to_csv(output_path, index=False)
+# data.to_csv(output_path, index=False)
 upload_to_minio(str(output_path), "diabetes", "raw/diabetes.csv")

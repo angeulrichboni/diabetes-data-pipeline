@@ -41,3 +41,13 @@ def upload_to_minio(local_file, bucket_name, minio_path, client=None):
         print(f"✅ Fichier {local_file} uploadé dans MinIO → {bucket_name}/{minio_path}")
     except S3Error as e:
         print(f"❌ Erreur lors de l'upload : {e}")
+        
+def download_from_minio(bucket_name, minio_path, local_file, client=None):
+    if client is None:
+        client = get_minio_client()
+        
+    try:
+        client.fget_object(bucket_name, minio_path, local_file)
+        print(f"✅ Fichier {local_file} téléchargé depuis MinIO → {bucket_name}/{minio_path}")
+    except S3Error as e:
+        print(f"❌ Erreur lors du téléchargement : {e}")

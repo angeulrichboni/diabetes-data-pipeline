@@ -1,5 +1,4 @@
 .env
-.init-scripts/
 
 data/**
 !data/.gitkeep
@@ -10,3 +9,9 @@ __pycache__/
 
 airflow/**
 !airflow/.gitkeep
+
+tests/
+
+.pytest_cache/
+
+pytest.ini
