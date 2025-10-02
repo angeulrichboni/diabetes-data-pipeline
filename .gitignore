@@ -7,8 +7,8 @@ diabete_env/
 
 __pycache__/
 
-airflow/**
-!airflow/.gitkeep
+airflow/logs/
+airflow/plugins/
 
 tests/
 
