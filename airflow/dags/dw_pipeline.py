@@ -15,19 +15,13 @@ default_args = {
 }
 
 with DAG(
-    'diabetes_dag',
+    'etl_diabetes_pipeline',
     schedule_interval=None,
     start_date=datetime(2025,9,26),
     catchup=False,
     default_args=default_args,
     template_searchpath=['/opt/airflow/dags/sql']
 ) as dag:
-
-    # create_staging = SQLExecuteQueryOperator(
-    #     task_id="create_staging_objects",
-    #     sql="staging_diabetes.sql",
-    #     conn_id="postgres_dw"   
-    # )
     
     task_extract = PythonOperator(
         task_id ="extract_data",

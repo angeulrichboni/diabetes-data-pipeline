@@ -32,7 +32,7 @@ Ce projet met en place un pipeline de données complet pour l'analyse des hospit
    ```bash
    docker-compose up --build
    ```
-3. Accéder à l'interface Airflow : [http://localhost:5005](http://localhost:5005)
+3. Accéder à l'interface Airflow : [http://localhost:{PORT}](http://localhost:{PORT}) (`PORT` est le port choisir pour exposer le container)
 4. Déclencher le DAG `diabetes_dag` pour exécuter le pipeline complet.
 
 ## Structure des dossiers
@@ -42,7 +42,6 @@ Ce projet met en place un pipeline de données complet pour l'analyse des hospit
 - `data/` : Données brutes et nettoyées (stockées aussi sur MinIO)
 - `sql/` : Scripts de création des tables (staging, dimensions, faits)
 - `migrations/` : Scripts Alembic pour la gestion des migrations SQL
-- `tests/` : Tests unitaires des utilitaires Python
 
 ## Principaux fichiers
 - `docker-compose.yml` : Définition des services
@@ -51,11 +50,6 @@ Ce projet met en place un pipeline de données complet pour l'analyse des hospit
 - `airflow/dags/utils/` : Fonctions d'extraction, transformation, chargement
 - `sql/` : Scripts SQL pour la structure du Data Warehouse
 
-## Tests
-Lancer les tests unitaires :
-```bash
-pytest
-```
 
 ## Migrations Alembic (PostgreSQL)
 Alembic est utilisé pour créer et versionner les tables dans PostgreSQL (schémas `staging` et `analytics`). Les migrations se trouvent dans `migrations/` et sont configurées via `alembic.ini` et `migrations/env.py`.
