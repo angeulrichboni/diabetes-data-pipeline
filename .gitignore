@@ -1,5 +1,4 @@
 .env
-.init-scripts/
 
 data/**
 !data/.gitkeep
@@ -8,5 +7,11 @@ diabete_env/
 
 __pycache__/
 
-airflow/**
-!airflow/.gitkeep
+airflow/logs/
+airflow/plugins/
+
+tests/
+
+.pytest_cache/
+
+pytest.ini

@@ -2,15 +2,19 @@ import os
 from minio import Minio
 from minio.error import S3Error
 from dotenv import load_dotenv
+from pathlib import Path
+import random, re
 
 # load environnment 
 load_dotenv()
 
 # minio variables
-MINIO_ENDPOINT = "localhost:5001"
+MINIO_ENDPOINT = "minio:9000"
 MINIO_ACCESS_KEY = os.getenv("MINIO_ROOT_USER")
 MINIO_SECRET_KEY  = os.getenv("MINIO_ROOT_PASSWORD")
 BUCKET_NAME = "diabetes"
+
+BASE_PATH = Path("/opt/airflow/data")
 
 
 def get_minio_client():
@@ -51,3 +55,27 @@ def download_from_minio(bucket_name, minio_path, local_file, client=None):
         print(f"✅ Fichier {local_file} téléchargé depuis MinIO → {bucket_name}/{minio_path}")
     except S3Error as e:
         print(f"❌ Erreur lors du téléchargement : {e}")
+
+def prepare_path(base, subdir, filename):
+    path = BASE_PATH / base / subdir
+    path.mkdir(parents=True, exist_ok=True)
+    return path / filename
+
+def random_age_from_interval(interval):
+    match = re.match(r'\[(\d+)-(\d+)\)', interval)
+    if match:
+        start = int(match.group(1))
+        end = int(match.group(2))
+        return random.randint(start, end - 1)
+    else:
+        return None
+    
+# def get_postgresql_engine(user: str = None, password: str=None, host: str=None, port: int=5432, db_name: str=None) -> Engine:
+#     user = user or os.getenv("POSTGRES_USER", "postgres")
+#     password = password or os.getenv("POSTGRES_PASSWORD", "postgres")
+#     host = host or "postgres"
+#     port = port or int(os.getenv("POSTGRES_HOST_PORT", 5432))
+#     db_name = db_name or os.getenv("POSTGRES_DB_DW", "postgres")
+
+#     connection_string = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
+#     return create_engine(connection_string)
